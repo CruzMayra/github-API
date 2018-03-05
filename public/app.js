@@ -13,13 +13,16 @@ function handleError(){
 
 function getUser(){
     const data = JSON.parse(this.responseText)
-    // console.log(data)
+    // console.log(data);
     var pics = document.getElementById('pics');
     pics.innerHTML = "";
     var photo = document.createElement('img');
-    photo.setAttribute('src', data.avatar_url)
-    
-    pics.appendChild(photo)
+    photo.setAttribute('src', data.avatar_url);
+    var ancourt = document.createElement('a');
+    ancourt.setAttribute('href', data.html_url);
+    ancourt.setAttribute('target', '_blank');
+    pics.appendChild(ancourt);
+    ancourt.appendChild(photo);
     
 }
 
@@ -72,5 +75,3 @@ function searchUser(){
 // }
 
 // //getData()
-
-//se suben cambiosssssss!!!!

@@ -1,10 +1,4 @@
 
-// const userArray = ['AdrixSC', 'superliza', 'CruzMayra', 'biokah', 'Hanie24']
-// function iterateUsers(userArray){
-//     for(var i = 0; i < userArray.length; i++){
-//         getData(userArray[i])
-//     }
-// }
 
 function getData (url){
     var request = new XMLHttpRequest();
@@ -20,6 +14,31 @@ function handleError(){
 
 function getUser(){
     const data = JSON.parse(this.responseText)
+
+    var pics = document.getElementById('pics');
+    pics.innerHTML = "";
+    var photo = document.createElement('img');
+    photo.setAttribute('src', data.avatar_url);
+    var ancourt = document.createElement('a');
+    ancourt.setAttribute('href', data.html_url);
+    ancourt.setAttribute('target', '_blank');
+    pics.appendChild(ancourt);
+    ancourt.appendChild(photo);
+    
+}
+
+//iterateUsers(userArray)
+
+var button = document.getElementById('button-search');
+button.addEventListener('click', searchUser)
+
+function searchUser(){
+    var user = document.getElementById('input-user');
+    // user.value = "";
+    getData(user.value);
+    user.value = "";
+}
+
     var pics = document.getElementById('pics');
     pics.innerHTML = ''
     //console.log(data)
@@ -28,7 +47,7 @@ function getUser(){
     pics.appendChild(photo)
 }
 
-//iterateUsers(userArray)
+
 
 var button = document.getElementById('button-search');
 button.addEventListener('click', searchUser)

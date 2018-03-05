@@ -14,23 +14,48 @@ function getUser(){
     const data = JSON.parse(this.responseText)
     var pics = document.getElementById('pics');
     pics.innerHTML = ''
-    //console.log("data",data)
     var photo = document.createElement('img');
     photo.setAttribute('src', data.avatar_url)
     var name = document.createElement("p")
     name.innerHTML = data.login;
-    //console.log(name)
     pics.appendChild(name);
     pics.appendChild(photo);
 };
-
-//iterateUsers(userArray)
 
 var button = document.getElementById('button-search');
 button.addEventListener('click', searchUser)
 
 function searchUser(){
     var user = document.getElementById('input-user');
-    //console.log(user)
     getData(user.value)
+}
+
+
+var repoButton = document.getElementById('repo-button');
+repoButton.addEventListener('click', searchRepository);
+
+function searchRepository(){
+    var repoInput = document.getElementById('repo');
+    var request = new XMLHttpRequest();
+    request.open('GET', 'https://api.github.com/search/repositories?q=' + repoInput.value)
+    request.onload = getRepos;
+    request.onerror = handleError;
+    request.send()
+}
+
+function getRepos(){
+    const data = JSON.parse(this.responseText);
+    console.log(data.items)
+    for(var i = 0; i < data.items.length; i++){
+        var link = 'https://www.github.com/' + data.items[i]['full_name'];
+        var div = document.createElement('div')
+        var sectionLink = document.getElementById("link-repo");
+        var paragraphLink = document.createElement("a");
+        paragraphLink.setAttribute("href", link);
+        paragraphLink.innerText = data.items[i].name;
+        div.appendChild(paragraphLink)
+        sectionLink.appendChild(div);
+        
+    }
+
 }
